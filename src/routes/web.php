@@ -18,6 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-// Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+// POST /admin/login に対応
+Route::post('/admin/login', [AuthController::class, 'adminLogin'])->name('admin.login');
 
+// POST /login に対応
+Route::post('/login', [AuthController::class, 'userLogin'])->name('user.login');
