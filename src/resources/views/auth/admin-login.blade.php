@@ -2,6 +2,10 @@
 
 @section('title', '管理者ログイン')
 
+@section('header')
+    @include('layouts.header.admin-header')
+@endsection
+
 @if ($errors->any())
     <div class="alert alert-danger">
         ログイン情報が登録されていません

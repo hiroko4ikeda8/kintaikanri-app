@@ -2,6 +2,10 @@
 
 @section('title', 'ログイン')
 
+@section('header')
+    @include('layouts.header.user-header')
+@endsection
+
 @if ($errors->any())
     <div class="alert alert-danger">
         ログイン情報が登録されていません

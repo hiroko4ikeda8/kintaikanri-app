@@ -2,6 +2,10 @@
 
 @section('title', 'ユーザー登録')
 
+@section('header')
+    @include('layouts.header.auth-header')
+@endsection
+
 @if ($errors->any())
     <div class="alert alert-danger">
         会員情報が登録されていません
