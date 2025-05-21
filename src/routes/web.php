@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminAttendanceController;
+use App\Http\Controllers\UserAttendanceController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +37,5 @@ Route::post('/admin/login', [AuthController::class, 'adminLogin'])->name('admin.
 Route::get('/logout', [AuthController::class, 'logout']); // 開発中のみ使用
 // ↑ 開発中はGETでログアウトしていたが、本番環境では使用しないこと！
 
+Route::get('/admin/attendance', [AdminAttendanceController::class, 'index']);
+Route::get('/attendance', [UserAttendanceController::class, 'index']);
