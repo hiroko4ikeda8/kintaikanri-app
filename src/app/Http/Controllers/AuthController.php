@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\AdminLoginRequest;
 use App\Http\Requests\UserLoginRequest;
@@ -27,10 +29,22 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request)
     {
-        // バリデーション済みのデータ
+        // バリデーション済みのデータを取得
         $validated = $request->validated();
 
-        // ユーザー作成などの処理
+        // ユーザーを作成
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'role' => 'user', // 必要ならデフォルトのロールを指定
+        ]);
+
+        // 自動ログインさせたい場合は以下を追加
+        Auth::login($user);
+
+        // 登録後にリダイレクト
+        return redirect('/attendance'); // or 適切なトップページ
     }
 
     public function adminLogin(AdminLoginRequest $request)
