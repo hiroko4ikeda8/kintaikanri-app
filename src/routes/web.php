@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserApplicationController;
 use App\Http\Controllers\AdminAttendanceController;
 use App\Http\Controllers\UserAttendanceController;
 use App\Http\Controllers\AuthController;
@@ -44,3 +45,4 @@ Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'index']
 Route::get('/attendance', [UserAttendanceController::class, 'create']);
 Route::get('/attendance/list', [UserAttendanceController::class, 'index']);
 Route::get('/attendance/{id}', [UserAttendanceController::class, 'show'])->name('attendance.show');
+Route::get('/stamp_correction_request/list', [UserApplicationController::class, 'index']);
