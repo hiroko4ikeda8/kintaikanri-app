@@ -6,13 +6,15 @@
     @include('layouts.header.admin-header')
 @endsection
 
-@if ($errors->any())
-    <div class="alert alert-danger">
-        ログイン情報が登録されていません
-    </div>
-@endif
+
 
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            ログイン情報が登録されていません
+        </div>
+    @endif
+    
     <h1>管理者ログイン</h1>
 
         <form class="form" action="{{ route('admin.login') }}" method="POST">

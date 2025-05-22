@@ -6,13 +6,14 @@
     @include('layouts.header.user-header')
 @endsection
 
-@if ($errors->any())
-    <div class="alert alert-danger">
-        ログイン情報が登録されていません
-    </div>
-@endif
-
 @section('content')
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            ログイン情報が登録されていません
+        </div>
+    @endif
+
     <h1>ログイン</h1>
 
         <form class="form" action="{{ route('user.login') }}" method="POST">

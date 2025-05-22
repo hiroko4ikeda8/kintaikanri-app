@@ -15,7 +15,6 @@
     </style>
 </head>
 <body>
-
     {{-- 各画面の@section('header') から来る内容をここに表示 --}}
     @yield('header')
 

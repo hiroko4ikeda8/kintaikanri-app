@@ -6,13 +6,13 @@
     @include('layouts.header.auth-header')
 @endsection
 
-@if ($errors->any())
-    <div class="alert alert-danger">
-        会員情報が登録されていません
-    </div>
-@endif
-
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            会員情報が登録されていません
+        </div>
+    @endif
+    
     <h1>ユーザー登録</h1>
 
     <form class="form" action="{{ route('register') }}" method="post">

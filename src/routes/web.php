@@ -37,5 +37,10 @@ Route::post('/admin/login', [AuthController::class, 'adminLogin'])->name('admin.
 Route::get('/logout', [AuthController::class, 'logout']); // 開発中のみ使用
 // ↑ 開発中はGETでログアウトしていたが、本番環境では使用しないこと！
 
-Route::get('/admin/attendance', [AdminAttendanceController::class, 'index']);
-Route::get('/attendance', [UserAttendanceController::class, 'index']);
+// 管理者用トップページ
+Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'index']);
+
+// 一般ユーザー登録ページ
+Route::get('/attendance', [UserAttendanceController::class, 'create']);
+Route::get('/attendance/list', [UserAttendanceController::class, 'index']);
+Route::get('/attendance/{id}', [UserAttendanceController::class, 'show'])->name('attendance.show');

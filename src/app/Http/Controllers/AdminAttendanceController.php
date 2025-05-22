@@ -8,6 +8,6 @@ class AdminAttendanceController extends Controller
 {
     public function index()
     {
-        return view('admin.attendance.index');
+        return view('admin.attendance.list.index');
     }
 }
