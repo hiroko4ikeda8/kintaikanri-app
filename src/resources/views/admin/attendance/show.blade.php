@@ -3,7 +3,7 @@
 @section('title', '勤怠詳細画面')
 
 @section('header')
-    @include('layouts.header.user-header')
+    @include('layouts.header.admin-header')
 @endsection
 
 @section('content')
@@ -35,7 +35,7 @@
                         <tr><td>09:00 ～ 18:00</td></tr>
                         <tr><td>12:00 ～ 13:00</td></tr>
                         <tr><td>空欄</td></tr>
-                        <tr><td>電車遅延のため</td></tr>
+                        <tr><td>空欄</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -44,7 +44,7 @@
 
     <!-- 修正ボタン -->
     <div class="text-center mt-4">
-        <button class="btn btn-dark px-5 py-2">修正</button>
+        <a href="#" class="btn btn-dark px-5 py-2">修正</a>
     </div>
 </div>
 @endsection

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminStaffController;
 use App\Http\Controllers\UserApplicationController;
 use App\Http\Controllers\AdminAttendanceController;
 use App\Http\Controllers\UserAttendanceController;
@@ -40,7 +41,8 @@ Route::get('/logout', [AuthController::class, 'logout']); // 開発中のみ使�
 
 // 管理者用トップページ
 Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'index']);
-
+Route::get('/admin/attendance/{id}', [AdminAttendanceController::class, 'show'])->name('admin.attendance.show');
+Route::get('/admin/staff', [AdminStaffController::class, 'index'])->name('admin.staff.index');
 // 一般ユーザー登録ページ
 Route::get('/attendance', [UserAttendanceController::class, 'create']);
 Route::get('/attendance/list', [UserAttendanceController::class, 'index']);
