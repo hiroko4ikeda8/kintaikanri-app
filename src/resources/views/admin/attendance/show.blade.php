@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '勤怠詳細画面')
+@section('title', '勤怠詳細画面（管理者）')
 
 @section('header')
     @include('layouts.header.admin-header')

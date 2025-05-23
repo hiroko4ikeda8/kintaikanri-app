@@ -1,10 +1,10 @@
 
 @extends('layouts.app')
 
-@section('title', '申請一覧画面')
+@section('title', '申請一覧画面（一般ユーザー）')
 
 @section('header')
-    @include('layouts.header.admin-header')
+    @include('layouts.header.user-header')
 @endsection
 
 @section('content')

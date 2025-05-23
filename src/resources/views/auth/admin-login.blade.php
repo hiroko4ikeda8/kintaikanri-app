@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '管理者ログイン')
+@section('title', '管理者ログイン(管理者)')
 
 @section('header')
     @include('layouts.header.admin-header')

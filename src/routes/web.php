@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminApplicationController;
 use App\Http\Controllers\AdminStaffController;
 use App\Http\Controllers\UserApplicationController;
 use App\Http\Controllers\AdminAttendanceController;
@@ -36,13 +37,15 @@ Route::post('/admin/login', [AuthController::class, 'adminLogin'])->name('admin.
 // Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // 開発用（後で本番時にはコメントアウトまたは削除）
-Route::get('/logout', [AuthController::class, 'logout']); // 開発中のみ使用
+Route::post('/logout', [AuthController::class, 'logout']); // 開発中のみ使用
 // ↑ 開発中はGETでログアウトしていたが、本番環境では使用しないこと！
 
 // 管理者用トップページ
 Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'index']);
 Route::get('/admin/attendance/{id}', [AdminAttendanceController::class, 'show'])->name('admin.attendance.show');
-Route::get('/admin/staff', [AdminStaffController::class, 'index'])->name('admin.staff.index');
+Route::get('/admin/staff/list', [AdminStaffController::class, 'index'])->name('admin.staff.index');
+Route::get('/admin/attendance/staff/{id}', [AdminStaffController::class, 'showAttendances'])->name('admin.staff.attendance.show');
+Route::get('/stamp_correction_request/approve/{id}', [AdminApplicationController::class, 'approve'])->name('admin.application.approve');
 // 一般ユーザー登録ページ
 Route::get('/attendance', [UserAttendanceController::class, 'create']);
 Route::get('/attendance/list', [UserAttendanceController::class, 'index']);

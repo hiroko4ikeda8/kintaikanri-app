@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'ユーザー登録')
+@section('title', '会員登録画面（一般ユーザー）')
 
 @section('header')
     @include('layouts.header.auth-header')

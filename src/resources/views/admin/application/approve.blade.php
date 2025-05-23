@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title', '勤怠詳細画面（一般ユーザー）')
+@section('title', '修正申請承認画面（管理者）')
 
 @section('header')
-    @include('layouts.header.user-header')
+    @include('layouts.header.admin-header')
 @endsection
 
 @section('content')
@@ -44,7 +44,7 @@
 
     <!-- 修正ボタン -->
     <div class="text-center mt-4">
-        <button class="btn btn-dark px-5 py-2">修正</button>
+        <button class="btn btn-dark px-5 py-2">承認</button>
     </div>
 </div>
 @endsection
