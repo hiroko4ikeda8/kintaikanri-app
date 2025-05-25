@@ -48,8 +48,8 @@ class User extends Authenticatable
         return $this->hasMany(Attendance::class);
     }
 
-    public function applications()
+    public function attendanceCorrectRequests()
     {
-        return $this->hasMany(Application::class);
+        return $this->hasMany(AttendanceCorrectRequest::class);
     }
 }
