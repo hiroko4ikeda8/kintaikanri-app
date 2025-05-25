@@ -17,6 +17,5 @@ class DatabaseSeeder extends Seeder
         $this->call(AttendancesTableSeeder::class);
         $this->call(BreakTimesTableSeeder::class);
         $this->call(AttendanceCorrectRequestsSeeder::class);
-        $this->call(AttendanceCorrectBreaksSeeder::class);
     }
 }
