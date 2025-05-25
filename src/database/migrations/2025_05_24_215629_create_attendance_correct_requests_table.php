@@ -15,6 +15,12 @@ class CreateAttendanceCorrectRequestsTable extends Migration
     {
         Schema::create('attendance_correct_requests', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('attendance_id')->constrained('attendances')->onDelete('cascade');
+            $table->time('correct_clock_in');
+            $table->time('correct_clock_out');
+            $table->text('remarks')->nullable();
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamps();
         });
     }
