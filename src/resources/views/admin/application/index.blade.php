@@ -21,29 +21,45 @@
     <hr class="border-dark">
 
     <!-- 申請一覧テーブル -->
-    <table class="table table-bordered text-center">
-        <thead class="table-dark text-white">
-            <tr>
-                <th>状態</th>
-                <th>名前</th>
-                <th>対象日時</th>
-                <th>申請理由</th>
-                <th>申請日時</th>
-                <th>詳細</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for ($i = 1; $i <= 9; $i++)
-            <tr>
-                <td>承認待ち</td>
-                <td>西 怜奈</td>
-                <td>2023/08/01</td>
-                <td>遅延のため</td>
-                <td>2023/06/02</td>
-                <td><a href="#" class="text-dark">詳細</a></td>
-            </tr>
-            @endfor
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-bordered text-center">
+            <thead class="table-dark text-white">
+                <tr>
+                    <th>状態</th>
+                    <th>名前</th>
+                    <th>対象日時</th>
+                    <th>申請理由</th>
+                    <th>申請日時</th>
+                    <th>詳細</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="fw-bold text-danger">承認待ち</td>
+                    <td>西 怜奈</td>
+                    <td>2023/06/01</td>
+                    <td>遅延のため</td>
+                    <td>2023/06/02</td>
+                    <td><a href="#" class="btn btn-outline-dark btn-sm">詳細</a></td>
+                </tr>
+                <tr>
+                    <td class="fw-bold text-danger">承認待ち</td>
+                    <td>山田 太郎</td>
+                    <td>2023/06/01</td>
+                    <td>遅延のため</td>
+                    <td>2023/06/02</td>
+                    <td><a href="#" class="btn btn-outline-dark btn-sm">詳細</a></td>
+                </tr>
+                <tr>
+                    <td class="fw-bold text-danger">承認待ち</td>
+                    <td>山田 花子</td>
+                    <td>2023/06/01</td>
+                    <td>遅延のため</td>
+                    <td>2023/06/02</td>
+                    <td><a href="#" class="btn btn-outline-dark btn-sm">詳細</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 @endsection

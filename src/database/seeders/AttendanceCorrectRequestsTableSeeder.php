@@ -24,8 +24,8 @@ class AttendanceCorrectRequestsTableSeeder extends Seeder
             $requestId = DB::table('attendance_correct_requests')->insertGetId([
                 'user_id' => $user->id,
                 'attendance_id' => $attendance->id,
-                'correct_clock_in' => '09:30:00',
-                'correct_clock_out' => '18:30:00',
+                'correct_clock_in' => '09:00:00',
+                'correct_clock_out' => '18:00:00',
                 'remarks' => '遅延のため',
                 'status' => 'pending',
                 'created_at' => now(),
@@ -37,14 +37,14 @@ class AttendanceCorrectRequestsTableSeeder extends Seeder
                 [
                     'attendance_correct_request_id' => $requestId,
                     'correct_break_start' => '12:00:00',
-                    'correct_break_end' => '12:30:00',
+                    'correct_break_end' => '13:00:00',
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],
                 [
                     'attendance_correct_request_id' => $requestId,
-                    'correct_break_start' => '15:00:00',
-                    'correct_break_end' => '15:15:00',
+                    'correct_break_start' => null,
+                    'correct_break_end' => null,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],
