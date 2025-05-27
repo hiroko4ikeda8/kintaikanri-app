@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Attendance;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class AdminStaffController extends Controller
+class StaffController extends Controller
 {
     public function index()
     {

@@ -1,11 +1,13 @@
 <?php
 
-use App\Http\Controllers\AdminApplicationController;
-use App\Http\Controllers\AdminStaffController;
-use App\Http\Controllers\UserApplicationController;
-use App\Http\Controllers\AdminAttendanceController;
-use App\Http\Controllers\UserAttendanceController;
+
+use App\Http\Controllers\Admin\StampCorrectionRequestController;
+use App\Http\Controllers\Admin\StaffController;
+use App\Http\Controllers\Admin\AttendanceController;
+use App\Http\Controllers\User\UserStampCorrectionRequestController;
+use App\Http\Controllers\User\UserAttendanceController;
 use App\Http\Controllers\AuthController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,15 +43,22 @@ Route::get('/logout', [AuthController::class, 'logout']); // 開発中のみ使�
 // ↑ 開発中はGETでログアウトしていたが、本番環境では使用しないこと！
 
 // 管理者用トップページ
-Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'index']);
-Route::get('/admin/attendance/{id}', [AdminAttendanceController::class, 'show'])->name('admin.attendance.show');
-Route::get('/admin/staff/list', [AdminStaffController::class, 'index'])->name('admin.staff.index');
-Route::get('/admin/attendance/staff/{id}', [AdminStaffController::class, 'showAttendances'])->name('admin.staff.attendance.show');
-Route::get('/admin/stamp_correction_request/list', [AdminStaffController::class, 'index'])->name('admin.stamp_correction_request.index');
-Route::get('/admin/application/approve/{id}', [AdminApplicationController::class, 'approve'])->name('admin.application.approve');
+Route::get('/admin/attendance/list', [AttendanceController::class, 'index']);
+Route::get('/admin/attendance/{id}', [AttendanceController::class, 'show'])->name('admin.attendance.show');
+Route::get('/admin/staff/list', [StaffController::class, 'index'])->name('admin.staff.index');
+Route::get('/admin/attendance/staff/{id}', [StaffController::class, 'showAttendances'])->name('admin.staff.attendance.show');
+// 管理者側（一覧・承認）
+// Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/stamp_correction_request/list', [StampCorrectionRequestController::class, 'index']);
+    Route::get('/admin/stamp_correction_request/approve/{id}', [StampCorrectionRequestController::class, 'approve']);
+// });
 
 // 一般ユーザー登録ページ
 Route::get('/attendance', [UserAttendanceController::class, 'create']);
 Route::get('/attendance/list', [UserAttendanceController::class, 'index']);
 Route::get('/attendance/{id}', [UserAttendanceController::class, 'show'])->name('attendance.show');
-Route::get('/stamp_correction_request/list', [UserApplicationController::class, 'index']);
+// ユーザー申請用
+// Route::middleware(['auth', 'user'])->group(function () {
+    Route::get('/stamp_correction_request/list', [UserStampCorrectionRequestController::class, 'index']);
+    Route::post('/stamp_correction_request/store', [UserStampCorrectionRequestController::class, 'store']);
+// });

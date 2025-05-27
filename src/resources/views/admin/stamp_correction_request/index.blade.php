@@ -40,7 +40,7 @@
                     <td>2023/06/01</td>
                     <td>遅延のため</td>
                     <td>2023/06/02</td>
-                    <td><a href="#" class="btn btn-outline-dark btn-sm">詳細</a></td>
+                    <td><a href="#" class="text-dark">詳細</a></td>
                 </tr>
                 <tr>
                     <td class="fw-bold text-danger">承認待ち</td>
@@ -48,7 +48,7 @@
                     <td>2023/06/01</td>
                     <td>遅延のため</td>
                     <td>2023/06/02</td>
-                    <td><a href="#" class="btn btn-outline-dark btn-sm">詳細</a></td>
+                    <td><a href="#" class="text-dark">詳細</a></td>
                 </tr>
                 <tr>
                     <td class="fw-bold text-danger">承認待ち</td>
@@ -56,7 +56,7 @@
                     <td>2023/06/01</td>
                     <td>遅延のため</td>
                     <td>2023/06/02</td>
-                    <td><a href="#" class="btn btn-outline-dark btn-sm">詳細</a></td>
+                    <td><a href="#" class="text-dark">詳細</a></td>
                 </tr>
             </tbody>
         </table>
