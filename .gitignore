@@ -1,3 +1,7 @@
 docker/mysql/data/*
+
 *.env
+
+/backups/
+
 !.gitkeep
