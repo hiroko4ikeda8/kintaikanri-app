@@ -10,6 +10,6 @@ class UserStampCorrectionRequestController extends Controller
 {
     public function index()
     {
-        return view('stamp_correction_request.index');
+        return view('user.stamp_correction_request.index');
     }
 }

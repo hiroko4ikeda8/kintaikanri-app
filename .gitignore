@@ -4,4 +4,8 @@ docker/mysql/data/*
 
 /backups/
 
+# Draw.io files
+*.drawio
+*kintaikanri-app.png
+
 !.gitkeep
