@@ -8,4 +8,10 @@ docker/mysql/data/*
 *.drawio
 *kintaikanri-app.png
 
+/node_modules/
+/public/js/app.js
+/public/css/app.css
+/public/mix-manifest.json
+
+
 !.gitkeep
