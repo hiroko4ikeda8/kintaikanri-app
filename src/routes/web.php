@@ -43,13 +43,13 @@ Route::get('/logout', [AuthController::class, 'logout']); // 開発中のみ使�
 // ↑ 開発中はGETでログアウトしていたが、本番環境では使用しないこと！
 
 // 管理者用トップページ
-Route::get('/admin/attendance/list', [AttendanceController::class, 'index']);
+Route::get('/admin/attendance/list', [AttendanceController::class, 'index'])->name('admin.attendance.list');
 Route::get('/admin/attendance/{id}', [AttendanceController::class, 'show'])->name('admin.attendance.show');
 Route::get('/admin/staff/list', [StaffController::class, 'index'])->name('admin.staff.index');
 Route::get('/admin/attendance/staff/{id}', [StaffController::class, 'showAttendances'])->name('admin.staff.attendance.show');
 // 管理者側（一覧・承認）
 // Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/stamp_correction_request/list', [StampCorrectionRequestController::class, 'index']);
+    Route::get('/admin/stamp_correction_request/list', [StampCorrectionRequestController::class, 'index'])->name('admin.stamp_correction_request.list');
     Route::get('/admin/stamp_correction_request/approve/{id}', [StampCorrectionRequestController::class, 'approve']);
 // });
 

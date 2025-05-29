@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="container mt-4">
-    <h1 class="fw-bold">スタッフ一覧</h1>
+    <h1 class="fw-bold">| スタッフ一覧</h1>
 
     <!-- スタッフ一覧テーブル -->
     <table class="table table-bordered text-center">
