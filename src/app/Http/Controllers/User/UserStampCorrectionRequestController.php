@@ -12,4 +12,6 @@ class UserStampCorrectionRequestController extends Controller
     {
         return view('user.stamp_correction_request.index');
     }
+
+    
 }

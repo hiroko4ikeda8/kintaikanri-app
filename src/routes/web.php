@@ -53,12 +53,14 @@ Route::get('/admin/attendance/staff/{id}', [StaffController::class, 'showAttenda
     Route::get('/admin/stamp_correction_request/approve/{id}', [StampCorrectionRequestController::class, 'approve']);
 // });
 
+
+
 // 一般ユーザー登録ページ
 Route::get('/user/attendance', [UserAttendanceController::class, 'create'])->name('user.attendance.create');
 Route::get('/user/attendance/list', [UserAttendanceController::class, 'index'])->name('user.attendance.list');
 Route::get('/user/attendance/{id}', [UserAttendanceController::class, 'show'])->name('attendance.show');
 // ユーザー申請用
 // Route::middleware(['auth', 'user'])->group(function () {
-    Route::get('/user/stamp_correction_request/list', [UserStampCorrectionRequestController::class, 'index']);
+    Route::get('/user/stamp_correction_request/list', [UserStampCorrectionRequestController::class, 'index'])->name('user.stamp_correction_request.list');
     Route::post('/user/stamp_correction_request/store', [UserStampCorrectionRequestController::class, 'store']);
 // });

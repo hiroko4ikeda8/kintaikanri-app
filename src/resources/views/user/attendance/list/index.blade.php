@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="container mt-4">
-    <h1 class="fw-bold">勤怠一覧</h1>
+    <h1 class="fw-bold">| 勤怠一覧</h1>
 
     <!-- 月切り替えコンテナ -->
     <div class="d-flex align-items-center justify-content-center my-3">
