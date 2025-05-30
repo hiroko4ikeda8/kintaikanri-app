@@ -10,7 +10,11 @@ class UserAttendanceController extends Controller
 {
     public function create()
     {
-        return view('user.attendance.create');
+        $status = '勤務外';
+        $attendance_date = '2023年6月1日(木)';
+        $clock_in = '08:00';
+
+        return view('user.attendance.create', compact('status', 'attendance_date', 'clock_in'));
     }
 
     public function index()

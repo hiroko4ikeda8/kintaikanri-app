@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
         // 管理者ユーザー（ログインテスト用）
         DB::table('users')->insert([
             'name' => 'Admin User',
-            'email' => 'admin@example.com',
+            'email' => 'admin@coachtech.com',
             'password' => Hash::make('password'), // パスワードはハッシュ化
             'role' => 'admin',
             'created_at' => now(),
@@ -27,11 +27,12 @@ class UsersTableSeeder extends Seeder
 
         // 一般ユーザー（社員）5人分
         $employees = [
-            ['name' => '佐藤 太郎', 'email' => 'sato@example.com'],
-            ['name' => '鈴木 花子', 'email' => 'suzuki@example.com'],
-            ['name' => '田中 一郎', 'email' => 'tanaka@example.com'],
-            ['name' => '高橋 さくら', 'email' => 'takahashi@example.com'],
-            ['name' => '伊藤 健', 'email' => 'ito@example.com'],
+            ['name' => '西 怜奈', 'email' => 'reina.n@coachtech.com'],
+            ['name' => '山田 太郎', 'email' => 'taro.y@coachtech.com'],
+            ['name' => '増田 一世', 'email' => 'issei.m@coachtech.com'],
+            ['name' => '山本 敬吉', 'email' => 'keikichi.y@coachtech.com'],
+            ['name' => '秋田 朋美', 'email' => 'tomomi.a@coachtech.com'],
+            ['name' => '中西 教夫', 'email' => 'norio.n@coachtech.com'],
         ];
 
         foreach ($employees as $employee) {

@@ -27,7 +27,7 @@ class AttendancesTableSeeder extends Seeder
                     'user_id' => $userId,
                     'clock_in' => '09:00:00',
                     'clock_out' => '18:00:00',
-                    'status' => '勤務中',
+                    'status' => '出勤中',
                     'attendance_date' => Carbon::now()->subDays($i)->toDateString(),
                     'total_work_time' => 540,
                     'created_at' => Carbon::now(),

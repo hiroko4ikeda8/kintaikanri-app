@@ -18,7 +18,7 @@ class CreateAttendancesTable extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->time('clock_in');
             $table->time('clock_out'); // 退勤前対応
-            $table->enum('status', ['勤務外', '勤務中', '休憩中', '退勤済']);
+            $table->enum('status', ['勤務外', '出勤中', '休憩中', '退勤済']);
             $table->date('attendance_date');
             $table->integer('total_work_time');
             $table->timestamps();

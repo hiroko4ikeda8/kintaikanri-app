@@ -30,5 +30,7 @@
     <!-- BootstrapのJSも後で追加可 -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+    {{-- 各画面固有のスクリプトをここで挿入 --}}
+    @yield('scripts')
 </body>
 </html>
