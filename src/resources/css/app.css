@@ -4,3 +4,62 @@
 body {
     background-color: #F0EFF2;
 }
+
+/* 共通のボタンスタイル（ベース） */
+.btn-create {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+}
+
+/* 休憩ボタンの基本スタイル */
+.btn-break {
+    background-color: #fff;
+    color: #212529;
+    border: 1px solid #fff; /* ← 白のボーダーに変更 */
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    padding-left: 2rem !important;  /* ここで幅調整 */
+    padding-right: 2rem !important;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+
+    display: inline-block;
+    min-width: auto !important;       /* min-width解除 */
+    /* 必要に応じて幅を指定 */
+    width: auto;
+    /* 固定幅にしたくなければauto */
+    box-sizing: border-box;
+    /* パディング込みで幅を計算 */
+}
+
+.btn-break:hover,
+.btn-break:focus,
+.btn-break:active {
+    background-color: #fff !important;
+    color: #212529 !important;
+    border: none !important;
+    box-shadow: none !important;
+    cursor: pointer;
+    box-shadow: none !important;
+    outline: none !important;
+    border: 1px solid #fff !important; /* フォーカス時も白枠を維持 */
+}
+
+/* カーソルはちゃんとポインタに */
+.btn-break {
+    cursor: pointer;
+}
+
+
+/* 状態別の識別用クラス（UIは変えない） */
+.btn-clock-in {}
+
+.btn-break-start {}
+
+.btn-break-end {}
+
+.btn-clock-out {}

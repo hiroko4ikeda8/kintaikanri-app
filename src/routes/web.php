@@ -57,7 +57,7 @@ Route::get('/admin/attendance/staff/{id}', [StaffController::class, 'showAttenda
 
 // 一般ユーザー登録ページ
 Route::get('/user/attendance', [UserAttendanceController::class, 'create'])->name('user.attendance.create');
-Route::get('/user/attendance/list', [UserAttendanceController::class, 'index'])->name('user.attendance.list');
+Route::get('/user/attendance/list', [UserAttendanceController::class, 'index'])->middleware('auth')->name('user.attendance.list');
 Route::get('/user/attendance/{id}', [UserAttendanceController::class, 'show'])->name('attendance.show');
 // ユーザー申請用
 // Route::middleware(['auth', 'user'])->group(function () {

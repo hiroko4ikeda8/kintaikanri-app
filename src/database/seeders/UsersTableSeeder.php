@@ -25,7 +25,7 @@ class UsersTableSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
-        // 一般ユーザー（社員）5人分
+        // 一般ユーザー（社員）6人分
         $employees = [
             ['name' => '西 怜奈', 'email' => 'reina.n@coachtech.com'],
             ['name' => '山田 太郎', 'email' => 'taro.y@coachtech.com'],

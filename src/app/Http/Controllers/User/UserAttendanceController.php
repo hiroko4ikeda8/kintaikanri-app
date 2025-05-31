@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\User;
 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,7 +21,15 @@ class UserAttendanceController extends Controller
 
     public function index()
     {
-        return view('user.attendance.list.index');
+        $userId = Auth::id(); // 現在ログイン中のユーザーID
+        $targetMonth = '2025-04';
+
+        $attendances = Attendance::where('user_id', $userId)
+            ->where('attendance_date', 'like', $targetMonth . '%')
+            ->orderBy('attendance_date')
+            ->get();
+
+        return view('user.attendance.list.index', compact('attendances', 'targetMonth'));
     }
 
     public function show($id)

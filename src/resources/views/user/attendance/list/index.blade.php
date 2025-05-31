@@ -32,22 +32,33 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>06/01(木)</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td><a href="#" class="text-dark">詳細</a></td>
-            </tr>
-            <tr>
-                <td>06/02(金)</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td><a href="#" class="text-dark">詳細</a></td>
-            </tr>
+            @forelse ($attendances as $attendance)
+                <tr>
+                    <td>{{ \Carbon\Carbon::parse($attendance->attendance_date)->translatedFormat('m/d(D)') }}</td>
+                    <td>{{ $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '-' }}</td>
+                    <td>{{ $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '-' }}</td>
+                    <td>
+                        @php
+                            $totalBreak = $attendance->breakTimes->sum(function($break) {
+                                return \Carbon\Carbon::parse($break->break_end)->diffInMinutes(\Carbon\Carbon::parse($break->break_start));
+                            });
+                        @endphp
+                        {{ floor($totalBreak / 60) . ':' . str_pad($totalBreak % 60, 2, '0', STR_PAD_LEFT) }}
+                    </td>
+                    <td>
+                        @if ($attendance->total_work_time)
+                            {{ floor($attendance->total_work_time / 60) . ':' . str_pad($attendance->total_work_time % 60, 2, '0', STR_PAD_LEFT) }}
+                        @else
+                            -
+                        @endif
+                    </td>
+                    <td><a href="#" class="text-dark">詳細</a></td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="6">データがありません</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 </div>
