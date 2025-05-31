@@ -12,8 +12,9 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            font-weight: 600; /* ここでフォントの太さを指定 */
         }
-        
+
     </style>
 </head>
 <body>

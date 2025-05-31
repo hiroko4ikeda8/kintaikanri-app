@@ -12038,3 +12038,25 @@ body {
 .btn-break-end {}
 
 .btn-clock-out {}
+
+.index-container {
+    padding-left: 200px;
+    padding-right: 200px;
+}
+
+.month-switch-link {
+    color: #737373 !important;
+    text-decoration: none;
+}
+
+.index-table td,
+.index-table th {
+    border-left: none !important;
+    border-right: none !important;
+}
+
+.index-header th {
+    color: #737373 !important;
+}
+
+

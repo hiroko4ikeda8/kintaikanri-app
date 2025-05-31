@@ -24,12 +24,15 @@ class UserAttendanceController extends Controller
         $userId = Auth::id(); // 現在ログイン中のユーザーID
         $targetMonth = '2025-04';
 
+        // 年/月形式に変換
+        $formattedMonth = Carbon::parse($targetMonth . '-01')->format('Y/m');
+
         $attendances = Attendance::where('user_id', $userId)
             ->where('attendance_date', 'like', $targetMonth . '%')
             ->orderBy('attendance_date')
             ->get();
 
-        return view('user.attendance.list.index', compact('attendances', 'targetMonth'));
+        return view('user.attendance.list.index', compact('attendances', 'targetMonth', 'formattedMonth'));
     }
 
     public function show($id)
