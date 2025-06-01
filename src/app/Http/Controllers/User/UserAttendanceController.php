@@ -19,23 +19,31 @@ class UserAttendanceController extends Controller
         return view('user.attendance.create', compact('status', 'attendance_date', 'clock_in'));
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $userId = Auth::id(); // 現在ログイン中のユーザーID
-        $targetMonth = '2025-04';
+        $userId = Auth::id();
 
-        // 年/月形式に変換
+        // ▼ 初期値を「2025-05」に変更
+        $targetMonth = $request->query('month', '2025-05');
+
         $formattedMonth = Carbon::parse($targetMonth . '-01')->format('Y/m');
 
         $attendances = Attendance::where('user_id', $userId)
             ->where('attendance_date', 'like', $targetMonth . '%')
             ->orderBy('attendance_date')
-            ->with('breakTimes') // ✅ ここでリレーションをEager Load
+            ->with('breakTimes')
             ->get();
 
+        if ($request->ajax()) {
+            return response()->json([
+                'month' => $formattedMonth,
+                'attendances' => $attendances,
+            ]);
+        }
 
         return view('user.attendance.list.index', compact('attendances', 'targetMonth', 'formattedMonth'));
     }
+
 
     public function show($id)
     {

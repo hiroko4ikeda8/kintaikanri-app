@@ -12,18 +12,19 @@
 
     <!-- 月切り替えコンテナ -->
     <div class="d-flex align-items-center justify-content-between my-5 py-3 bg-white rounded px-4">
-        <a href="#" class="month-switch-link text-dark">
+        <a href="#" id="prev-month" class="month-switch-link text-dark">
             <img src="{{ asset('images/arrow.png') }}" alt="前月" style="width: 16px; height: 16px; transform: rotate(180deg); margin-right: 4px;">
             前月
         </a>
-        <span class="fw-bold">
+        <span class="fw-bold" id="displayed-month">
             <img src="{{ asset('images/calendar_icon.png') }}" alt="カレンダーアイコン"  style="width: 24px; height: 24px; margin-right: 6px;">
             <i class="bi bi-calendar"></i> {{ $formattedMonth }}
         </span>
-        <a href="#" class="month-switch-link text-dark">
+        
+        <a href="#" id="next-month" class="month-switch-link text-dark">
             翌月
             <img src="{{ asset('images/arrow.png') }}" alt="翌月" style="width: 16px; height: 16px; margin-left: 4px;">
-        </a>
+        </a>       
     </div>
 
     <!-- 勤怠一覧テーブル -->
@@ -72,7 +73,52 @@
                     <td colspan="6" style="color:#737373;">データがありません</td>
                 </tr>
             @endforelse
-        </tbody>       
+        </tbody>
     </table>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const prevMonthBtn = document.getElementById('prev-month');
+        const nextMonthBtn = document.getElementById('next-month');
+        const monthDisplay = document.getElementById('displayed-month');
+
+        let currentMonth = '{{ $formattedMonth }}';
+
+        // 前月
+        prevMonthBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const [year, month] = currentMonth.split('/').map(Number);
+            const date = new Date(year, month - 2); // JavaScriptの月は0始まり
+            const newYear = date.getFullYear();
+            const newMonth = String(date.getMonth() + 1).padStart(2, '0');
+
+            currentMonth = `${newYear}/${newMonth}`;
+            updateMonthDisplay();
+        });
+
+        // 翌月
+        nextMonthBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const [year, month] = currentMonth.split('/').map(Number);
+            const date = new Date(year, month); // 翌月（0始まりでなくそのまま渡す）
+            const newYear = date.getFullYear();
+            const newMonth = String(date.getMonth() + 1).padStart(2, '0');
+
+            currentMonth = `${newYear}/${newMonth}`;
+            updateMonthDisplay();
+        });
+
+        function updateMonthDisplay() {
+            monthDisplay.innerHTML = `
+                <img src="{{ asset('images/calendar_icon.png') }}" alt="カレンダーアイコン" style="width: 24px; height: 24px; margin-right: 6px;">
+                <i class="bi bi-calendar"></i> ${currentMonth}
+            `;
+        }
+    });
+</script>
 @endsection
