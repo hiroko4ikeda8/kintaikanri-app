@@ -30,7 +30,9 @@ class UserAttendanceController extends Controller
         $attendances = Attendance::where('user_id', $userId)
             ->where('attendance_date', 'like', $targetMonth . '%')
             ->orderBy('attendance_date')
+            ->with('breakTimes') // ✅ ここでリレーションをEager Load
             ->get();
+
 
         return view('user.attendance.list.index', compact('attendances', 'targetMonth', 'formattedMonth'));
     }
