@@ -66,7 +66,7 @@
                             -
                         @endif
                     </td>
-                    <td><a href="#" class="text-dark">詳細</a></td>
+                    <td><a href="{{ route('attendance.show', ['id' => $attendance->id])}}" class="text-dark text-decoration-none">詳細</a></td>
                 </tr>
             @empty
                 <tr>

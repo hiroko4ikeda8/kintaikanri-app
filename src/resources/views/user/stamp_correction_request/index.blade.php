@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-<div class="container mt-4">
+<div class="container mt-4 index-container">
     <h1 class="fw-bold">| 申請一覧</h1>
 
     <!-- 承認待ち・承認済みテキスト -->

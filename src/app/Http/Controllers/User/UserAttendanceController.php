@@ -50,4 +50,38 @@ class UserAttendanceController extends Controller
         $attendance = Attendance::findOrFail($id);
         return view('user.attendance.show', compact('attendance'));
     }
+
+    public function edit($attendanceId)
+    {
+        $attendance = Attendance::with('breakTimes')->findOrFail($attendanceId);
+        return view('attendance.edit', compact('attendance'));
+    }
+
+    public function update(Request $request, $attendanceId)
+    {
+        $attendance = Attendance::findOrFail($attendanceId);
+
+        // 休憩時間は配列で送られてくる想定
+        $breakStarts = $request->input('break_start', []);
+        $breakEnds = $request->input('break_end', []);
+
+        // 既存のbreakTimesを削除して更新する例（処理は要検討）
+        $attendance->breakTimes()->delete();
+
+        foreach ($breakStarts as $index => $start) {
+            $end = $breakEnds[$index] ?? null;
+            if ($start && $end) {
+                $attendance->breakTimes()->create([
+                    'break_start' => $start,
+                    'break_end' => $end,
+                ]);
+            }
+        }
+
+        // 他の勤怠データ更新処理もここに書く
+
+        $attendance->save();
+
+        return redirect()->route('attendance.edit', $attendanceId)->with('success', '更新しました');
+    }
 }

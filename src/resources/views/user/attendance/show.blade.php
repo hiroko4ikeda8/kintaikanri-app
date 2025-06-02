@@ -7,38 +7,95 @@
 @endsection
 
 @section('content')
-<div class="container mt-4">
+<div class="container mt-4 index-container">
     <h1 class="fw-bold">| 勤怠詳細</h1>
-    <!-- 勤怠詳細コンテナ -->
-    <div class="container mt-4">
-        <div class="row">
-            <!-- 縦型テーブル -->
-            <div class="col-md-4">
-                <table class="table table-bordered">
-                    <tbody class="fw-bold">
-                        <tr><td>名前</td></tr>
-                        <tr><td>日付</td></tr>
-                        <tr><td>出勤・退勤</td></tr>
-                        <tr><td>休憩</td></tr>
-                        <tr><td>休憩2</td></tr>
-                        <tr><td>備考</td></tr>
-                    </tbody>
-                </table>
-            </div>
 
-            <!-- データ表示部分 -->
-            <div class="col-md-8">
-                <table class="table table-bordered">
-                    <tbody>
-                        <tr><td>西 怜奈</td></tr>
-                        <tr><td>2023年 6月1日</td></tr>
-                        <tr><td>09:00 ～ 18:00</td></tr>
-                        <tr><td>12:00 ～ 13:00</td></tr>
-                        <tr><td>空欄</td></tr>
-                        <tr><td>電車遅延のため</td></tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="row mt-4">
+        <!-- 縦型テーブル -->
+        <div class="col-md-12">
+            <table class="table" style="border-radius: 10px; overflow: hidden;">
+                <tbody>
+                  <tr style="height: 90px;">
+                    <th style="padding-left: 50px; width: 30%; padding-top: 30px;">名前</th>
+                    <td style="width: 40%; padding-top: 30px;">西 怜奈</td>
+                    <td style="width: 30%;"></td>
+                  </tr>
+                  <tr style="height: 90px;">
+                    <th style="padding-left: 50px; width: 30%; padding-top: 30px;">日付</th>
+                    <td style="width: 40%;">
+                      <div style="display: flex; flex-direction: column; gap: 10px; padding-top: 30px;">
+                        <!-- 日付 -->
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                          <div>2023年</div>
+                          <div>6月1日</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td></td>
+                  </tr>
+                  
+                  <tr style="height: 90px;">
+                    <th style="padding-left: 50px; width: 30%; padding-top: 30px;">出勤・退勤</th>
+                    <td style="width: 40%;">
+                        <div style="display: flex; flex-direction: column; gap: 10px; padding-top: 30px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                              <input type="text" name="clock_in" class="form-control" style="width: 120px;"
+                                     placeholder="09:00"
+                                     value="{{ \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') }}">
+                              <div>～</div>
+                              <input type="text" name="clock_out" class="form-control" style="width: 120px;"
+                                     placeholder="18:00"
+                                     value="{{ \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') }}">
+                            </div>
+                        </div>
+                    </td>
+                    <td></td>
+                  </tr>
+                  
+                  <tr style="height: 90px;">
+                    <th style="padding-left: 50px; width: 30%; padding-top: 30px;">休憩</th>
+                    <td style="width: 40%;">
+                        <div style="display: flex; flex-direction: column; gap: 10px; padding-top: 30px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                              <input type="text" name="clock_in" class="form-control" style="width: 120px;"
+                                     placeholder="09:00"
+                                     value="{{ \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') }}">
+                              <div>～</div>
+                              <input type="text" name="clock_out" class="form-control" style="width: 120px;"
+                                     placeholder="18:00"
+                                     value="{{ \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') }}">
+                            </div>
+                        </div>
+                    </td>
+                    <td></td>
+                  </tr>
+                  
+                  <tr style="height: 90px;">
+                    <th style="padding-left: 50px; width: 30%; padding-top: 30px;">休憩2</th>
+                    <td style="width: 40%;">
+                      <div style="display: flex; flex-direction: column; gap: 10px; padding-top: 30px;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                          <input type="text" name="break2_start" class="form-control" style="width: 120px;"
+                                 value="{{ $attendance->break2_start ? \Carbon\Carbon::parse($attendance->break2_start)->format('H:i') : '' }}">
+                          <div>～</div>
+                          <input type="text" name="break2_end" class="form-control" style="width: 120px;"
+                                 value="{{ $attendance->break2_end ? \Carbon\Carbon::parse($attendance->break2_end)->format('H:i') : '' }}">
+                        </div>
+                      </div>
+                    </td>
+                    <td></td>
+                  </tr>
+
+                  <tr style="height: 90px;">
+                    <th style="padding-left: 50px; width: 30%; padding-top: 30px;">備考</th>
+                    <td>
+                      <textarea class="form-control" rows="3" style="resize: vertical;">{{ $attendance->remarks ?? '' }}</textarea>
+                    </td>
+                    <td></td>
+                  </tr>                  
+                </tbody>
+              </table>
+              
         </div>
     </div>
 
