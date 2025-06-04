@@ -42,16 +42,10 @@
         <tbody>
             @forelse ($attendances as $attendance)
                 <tr>
-                    <td style="color:#737373;">
-                        {{ \Carbon\Carbon::parse($attendance->attendance_date)->translatedFormat('m/d(D)') }}
-                    </td>
-                    <td style="color:#737373;">
-                        {{ $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '-' }}
-                    </td>
-                    <td style="color:#737373;">
-                        {{ $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '-' }}
-                    </td>
-                    <td style="color:#737373;">
+                    <td>{{ \Carbon\Carbon::parse($attendance->attendance_date)->translatedFormat('m/d(D)') }}</td>
+                    <td>{{ $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '-' }}</td>
+                    <td>{{ $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '-' }}</td>
+                    <td>
                         @php
                             $totalBreak = $attendance->breakTimes->sum(function($break) {
                                 return \Carbon\Carbon::parse($break->break_end)->diffInMinutes(\Carbon\Carbon::parse($break->break_start));
@@ -59,18 +53,18 @@
                         @endphp
                         {{ floor($totalBreak / 60) . ':' . str_pad($totalBreak % 60, 2, '0', STR_PAD_LEFT) }}
                     </td>
-                    <td style="color:#737373;">
+                    <td>
                         @if ($attendance->total_work_time)
                             {{ floor($attendance->total_work_time / 60) . ':' . str_pad($attendance->total_work_time % 60, 2, '0', STR_PAD_LEFT) }}
                         @else
                             -
                         @endif
                     </td>
-                    <td><a href="{{ route('attendance.show', ['id' => $attendance->id])}}" class="text-dark text-decoration-none">詳細</a></td>
+                    <td><a href="{{ route('attendance.show', ['id' => $attendance->id]) }}" class="text-dark text-decoration-none">詳細</a></td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6" style="color:#737373;">データがありません</td>
+                    <td colspan="6">データがありません</td>
                 </tr>
             @endforelse
         </tbody>

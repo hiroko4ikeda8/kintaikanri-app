@@ -71,7 +71,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             if ($user->role === 'user') {
-                return redirect()->intended('/attendance');
+                return redirect()->route('user.attendance.create'); // ← 勤怠登録UIへリダイレクト
             } else {
                 Auth::logout();
                 return back()->withErrors(['email' => '一般ユーザーアカウントではありません。']);

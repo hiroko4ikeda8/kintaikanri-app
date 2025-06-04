@@ -74,6 +74,12 @@ body {
     text-decoration: none;
 }
 
+.index-table {
+    border-radius: 0.75rem;
+    /* rounded-3 に相当 */
+    overflow: hidden;
+}
+
 .index-table td,
 .index-table th {
     border-left: none !important;
@@ -84,3 +90,18 @@ body {
     color: #737373 !important;
 }
 
+.index-table td:not(:last-child),
+.index-table th {
+    color: #737373 !important;
+}
+
+/* 申請一覧テキスト切替　*/
+.active-tab {
+    color: black !important;
+    font-weight: bold !important;
+}
+
+.inactive-tab {
+    color: #737373 !important;
+    font-weight: normal !important;
+}

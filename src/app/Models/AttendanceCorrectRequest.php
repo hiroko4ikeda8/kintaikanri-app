@@ -18,6 +18,21 @@ class AttendanceCorrectRequest extends Model
         'status',
     ];
 
+    // ✅ 日本語表記のアクセサを追加
+    public function getStatusJpAttribute()
+    {
+        switch ($this->status) {
+            case 'pending':
+                return '承認待ち';
+            case 'approved':
+                return '承認済み';
+            case 'rejected':
+                return '却下';
+            default:
+                return '不明なステータス';
+        }
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
