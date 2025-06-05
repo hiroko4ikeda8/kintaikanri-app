@@ -7,21 +7,28 @@
 @endsection
 
 @section('content')
-<div class="container mt-4">
-    <h1 class="fw-bold">| 勤怠一覧</h1>
+<div class="container mt-4 index-container">
+    <h1 class="fw-bold">| {{ $formattedDate }} の勤怠</h1>
 
-    <!-- 月切り替えコンテナ -->
-    <div class="d-flex align-items-center justify-content-center my-3">
-        <a href="#" class="btn btn-outline-dark">&larr; 前月</a>
-        <span class="mx-3 fw-bold">
-            <i class="bi bi-calendar"></i> 2023/06
+    <!-- 日付切り替えコンテナ -->
+    <div class="d-flex align-items-center justify-content-between my-5 py-3 bg-white rounded px-4">
+        <a href="#" id="prev-day" class="date-switch-link text-dark">
+            <img src="{{ asset('images/arrow.png') }}" alt="前日" style="width: 16px; height: 16px; transform: rotate(180deg); margin-right: 4px;">
+            前日
+        </a>
+        <span class="fw-bold" id="displayed-date">
+            <img src="{{ asset('images/calendar_icon.png') }}" alt="カレンダーアイコン" style="width: 24px; height: 24px; margin-right: 6px;">
+            <i class="bi bi-calendar"></i> {{ $formattedDate }}
         </span>
-        <a href="#" class="btn btn-outline-dark">翌月 &rarr;</a>
+        <a href="#" id="next-day" class="date-switch-link text-dark">
+            翌日
+            <img src="{{ asset('images/arrow.png') }}" alt="翌日" style="width: 16px; height: 16px; margin-left: 4px;">
+        </a>       
     </div>
 
     <!-- 勤怠一覧テーブル -->
-    <table class="table table-bordered text-center">
-        <thead class="table-dark text-white">
+    <table class="table table-bordered text-center index-table">
+        <thead class="bg-white index-header">
             <tr>
                 <th>名前</th>
                 <th>出勤</th>
@@ -31,56 +38,75 @@
                 <th>詳細</th>
             </tr>
         </thead>
-        <body>
-            <tr>
-                <td>山田　太郎</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td><a href="#" class="text-dark">詳細</a></td>
-            </tr>
-            <tr>
-                <td>西　怜奈</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td><a href="#" class="text-dark">詳細</a></td>
-            </tr>
-            <tr>
-                <td>増田　一世</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td><a href="#" class="text-dark">詳細</a></td>
-            </tr>
-            <tr>
-                <td>山本　敬吉</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td><a href="#" class="text-dark">詳細</a></td>
-            </tr>
-            <tr>
-                <td>秋田　朋美</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td><a href="#" class="text-dark">詳細</a></td>
-            </tr>
-            <tr>
-                <td>中西　教夫</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td><a href="#" class="text-dark">詳細</a></td>
-            </tr>
-        </body>
+        <tbody>
+            @forelse ($attendances as $attendance)
+                <tr>
+                    <td>{{ $attendance->user->name }}</td>
+                    <td>{{ $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '-' }}</td>
+                    <td>{{ $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '-' }}</td>
+                    <td>
+                        @php
+                            $totalBreak = $attendance->breakTimes->sum(function($break) {
+                                return \Carbon\Carbon::parse($break->break_end)->diffInMinutes(\Carbon\Carbon::parse($break->break_start));
+                            });
+                        @endphp
+                        {{ floor($totalBreak / 60) . ':' . str_pad($totalBreak % 60, 2, '0', STR_PAD_LEFT) }}
+                    </td>
+                    <td>
+                        @if ($attendance->total_work_time)
+                            {{ floor($attendance->total_work_time / 60) . ':' . str_pad($attendance->total_work_time % 60, 2, '0', STR_PAD_LEFT) }}
+                        @else
+                            -
+                        @endif
+                    </td>
+                    <td><a href="{{ route('admin.attendance.show', ['id' => $attendance->id]) }}" class="text-dark text-decoration-none">詳細</a></td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="6">データがありません</td>
+                </tr>
+            @endforelse
+        </tbody>
     </table>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let displayedDateElement = document.getElementById("displayed-date");
+        let prevDayButton = document.getElementById("prev-day");
+        let nextDayButton = document.getElementById("next-day");
+
+        // 現在表示されている日付を取得（Bladeから取得）
+        let currentDate = new Date("{{ $formattedDate }}");
+
+        // 日付を更新する関数
+        function updateDate(days) {
+            currentDate.setDate(currentDate.getDate() + days);
+            // ✅ 日付を "YYYY/MM/DD" にフォーマット
+            let year = currentDate.getFullYear();
+            let month = String(currentDate.getMonth() + 1).padStart(2, '0');
+            let day = String(currentDate.getDate()).padStart(2, '0');
+            let newFormattedDate = `${year}/${month}/${day}`; // 🔥 Laravelと同じフォーマットに変更
+
+            displayedDateElement.innerHTML = `
+                <img src="{{ asset('images/calendar_icon.png') }}" alt="カレンダーアイコン" style="width: 24px; height: 24px; margin-right: 6px;">
+                <i class="bi bi-calendar"></i> ${newFormattedDate}
+            `;
+        }
+
+        // 前日をクリック
+        prevDayButton.addEventListener("click", function(event) {
+            event.preventDefault(); // リンクのデフォルト動作を防ぐ
+            updateDate(-1);
+        });
+
+        // 翌日をクリック
+        nextDayButton.addEventListener("click", function(event) {
+            event.preventDefault();
+            updateDate(1);
+        });
+    });
+</script>
 @endsection

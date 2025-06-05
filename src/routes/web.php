@@ -45,10 +45,10 @@ Route::get('/logout', [AuthController::class, 'logout']); // 開発中のみ使�
 
 
 
-// 管理者用ログインフォーム表示
-Route::get('/admin/login', [AuthController::class, 'showAdminLoginForm'])->name('admin.login.form');
-// POST /admin/login に対応
-Route::post('/admin/login', [AuthController::class, 'adminLogin'])->name('admin.login');
+Route::middleware(['web'])->group(function () {
+    Route::get('/admin/login', [AuthController::class, 'showAdminLoginForm'])->name('admin.login.form');
+    Route::post('/admin/login', [AuthController::class, 'adminLogin'])->name('admin.login');
+});
 
 // 本番用：POSTメソッドでログアウト
 // Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

@@ -42,7 +42,7 @@
             <tbody>
                 @foreach ($requests as $request) <!-- ✅ ここで $requests をループ -->
                 <tr>
-                    <td>{{ $request->status }}</td>
+                    <td>{{ $request->status_jp }}</td>
                     <td>{{ $request->user->name }}</td>
                     <td>{{ $request->target_date }}</td>
                     <td>{{ $request->reason }}</td>
@@ -70,7 +70,7 @@
             <tbody>
                 @foreach ($requests as $request)
                 <tr>
-                    <td>{{ $request->status }}</td>
+                    <td>{{ $request->status_jp }}</td> <!-- ✅ 日本語表示に変更 -->
                     <td>{{ $request->user->name }}</td>
                     <td>{{ $request->target_date }}</td>
                     <td>{{ $request->reason }}</td>
@@ -99,8 +99,9 @@
 
         // 承認待ちを表示
         showPendingBtn.addEventListener("click", function () {
-            pendingTable.classList.remove("d-none");
-            approvedTable.classList.add("d-none");
+            pendingTable.style.display = "table"; // ✅ 表示
+            approvedTable.style.display = "none"; // ✅ 非表示
+
 
             // テキストの強調
             showPendingBtn.classList.add("active-tab");
@@ -111,8 +112,9 @@
 
         // 承認済みを表示
         showApprovedBtn.addEventListener("click", function () {
-            approvedTable.classList.remove("d-none");
-            pendingTable.classList.add("d-none");
+            approvedTable.style.display = "table"; // ✅ 表示
+            pendingTable.style.display = "none"; // ✅ 非表示
+
 
             // テキストの強調
             showApprovedBtn.classList.add("active-tab");

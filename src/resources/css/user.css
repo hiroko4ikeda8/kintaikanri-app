@@ -1,0 +1,17 @@
+
+/* 申請一覧テキスト切替　*/
+.active-tab {
+    color: black !important;
+    font-weight: bold !important;
+}
+
+.inactive-tab {
+    color: #737373 !important;
+    font-weight: normal !important;
+}
+
+
+.date-switch-link {
+    color: #737373 !important;
+    text-decoration: none !important;
+}

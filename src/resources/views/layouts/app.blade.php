@@ -3,9 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>@yield('title', '勤怠管理アプリ')</title>
-    <!-- あとでBootstrap追加 -->
+    
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"> -->
+
+    @if(Auth::check() && Auth::user()->role === 'admin')
+        <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    @else
+        <link rel="stylesheet" href="{{ asset('css/user.css') }}">
+    @endif
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 
     <!-- カスタムスタイル（Interフォント適用） -->
@@ -34,5 +42,8 @@
 
     {{-- 各画面固有のスクリプトをここで挿入 --}}
     @yield('scripts')
+    <!-- Bootstrap の JavaScript を追加 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>

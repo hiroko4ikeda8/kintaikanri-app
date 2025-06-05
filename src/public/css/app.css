@@ -12044,11 +12044,6 @@ body {
     padding-right: 200px;
 }
 
-.month-switch-link {
-    color: #737373 !important;
-    text-decoration: none;
-}
-
 .index-table {
     border-radius: 0.75rem;
     /* rounded-3 に相当 */
@@ -12070,13 +12065,5 @@ body {
     color: #737373 !important;
 }
 
-/* 申請一覧テキスト切替　*/
-.active-tab {
-    color: black !important;
-    font-weight: bold !important;
-}
 
-.inactive-tab {
-    color: #737373 !important;
-    font-weight: normal !important;
-}
+
