@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\AttendanceCorrectRequest;
 use App\Models\Attendance;
 use App\Http\Controllers\Controller;
@@ -11,10 +12,16 @@ class UserStampCorrectionRequestController extends Controller
 {
     public function index()
     {
-        $requests = AttendanceCorrectRequest::whereHas('user', function ($query) {
-            $query->where('role', 'user'); // ✅ 一般ユーザーのデータのみ取得
-        })->get();
+        $pendingRequests = AttendanceCorrectRequest::where('user_id', Auth::id())
+            ->where('status', 'pending')
+            ->with(['user', 'attendance'])
+            ->get();
 
-        return view('user.stamp_correction_request.index', compact('requests'));
+        $approvedRequests = AttendanceCorrectRequest::where('user_id', Auth::id())
+            ->where('status', 'approved')
+            ->with(['user', 'attendance'])
+            ->get();
+
+        return view('user.stamp_correction_request.index', compact('pendingRequests', 'approvedRequests'));
     }
 }

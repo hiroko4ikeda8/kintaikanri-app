@@ -47,7 +47,7 @@ class UserAttendanceController extends Controller
 
     public function show($id)
     {
-        $attendance = Attendance::findOrFail($id);
+        $attendance = Attendance::with('user')->findOrFail($id);
         return view('user.attendance.show', compact('attendance'));
     }
 

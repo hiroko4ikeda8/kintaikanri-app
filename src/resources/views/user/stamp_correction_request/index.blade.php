@@ -40,7 +40,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($requests as $request) <!-- ✅ ここで $requests をループ -->
+                @foreach ($pendingRequests as $request)
                 <tr>
                     <td>{{ $request->status_jp }}</td>
                     <td>{{ $request->user->name }}</td>
@@ -68,11 +68,11 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($requests as $request)
+                @foreach ($approvedRequests as $request)
                 <tr>
-                    <td>{{ $request->status_jp }}</td> <!-- ✅ 日本語表示に変更 -->
+                    <td>{{ $request->status_jp }}</td>
                     <td>{{ $request->user->name }}</td>
-                    <td>{{ $request->attendance->attendance_date; }}</td>
+                    <td>{{ $request->attendance->attendance_date }}</td>
                     <td>{{ $request->remarks }}</td>
                     <td>{{ $request->created_at->format('Y/m/d') }}</td>
                     <td><a href="{{ route('attendance.show', ['id' => $request->attendance_id]) }}" class="text-dark text-decoration-none">詳細</a></td>
@@ -91,33 +91,27 @@
         const showPendingBtn = document.getElementById("show-pending");
         const showApprovedBtn = document.getElementById("show-approved");
 
-        // 🌟 初期状態を設定（承認済みテーブルを非表示にする）
+        // 初期状態：承認済みテーブルは非表示
         approvedTable.classList.add("d-none");
+        pendingTable.classList.remove("d-none");
 
         showPendingBtn.classList.add("active-tab");
         showApprovedBtn.classList.add("inactive-tab");
 
-        // 承認待ちを表示
         showPendingBtn.addEventListener("click", function () {
-            pendingTable.style.display = "table"; // ✅ 表示
-            approvedTable.style.display = "none"; // ✅ 非表示
+            pendingTable.classList.remove("d-none");
+            approvedTable.classList.add("d-none");
 
-
-            // テキストの強調
             showPendingBtn.classList.add("active-tab");
             showPendingBtn.classList.remove("inactive-tab");
             showApprovedBtn.classList.remove("active-tab");
             showApprovedBtn.classList.add("inactive-tab");
         });
 
-        // 承認済みを表示
         showApprovedBtn.addEventListener("click", function () {
+            approvedTable.classList.remove("d-none");
+            pendingTable.classList.add("d-none");
 
-            approvedTable.style.display = "table"; // ✅ 表示
-            pendingTable.style.display = "none"; // ✅ 非表示
-
-
-            // テキストの強調
             showApprovedBtn.classList.add("active-tab");
             showApprovedBtn.classList.remove("inactive-tab");
             showPendingBtn.classList.remove("active-tab");

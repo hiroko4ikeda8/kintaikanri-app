@@ -16,10 +16,12 @@
                 <tbody>
                   <tr style="height: 90px;">
                     <th style="padding-left: 50px; width: 30%; padding-top: 30px;">名前</th>
-                    <td style="width: 40%; padding-top: 30px;">西　怜奈</td>
+                    <td style="width: 40%; padding-top: 30px;">
+                      {{ $attendance->user->name ?? '未登録ユーザー' }}
+                    </td>
                     <td style="width: 30%;"></td>
                   </tr>
-
+                  
                   <tr style="height: 90px;">
                     <th style="padding-left: 50px; width: 30%; padding-top: 30px;">日付</th>
                     <td style="width: 40%; padding-top: 30px;">
@@ -131,7 +133,7 @@
                         class="form-control"
                         style="max-width: 400px; height: 80px; resize: none;"
                         placeholder="申請理由を入力"
-                        onchange="console.log('備考変更:', this.value)"
+                        {{-- onchange="console.log('備考変更:', this.value)" --}}
                       >{{ $attendance->remarks ?? '' }}</textarea>
                     </td>
                     <td></td>
