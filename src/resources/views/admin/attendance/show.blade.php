@@ -69,7 +69,7 @@
 
     <!-- 修正ボタン -->
     <div id="request-button-wrapper" class="text-end mt-4">
-      <button id="request-btn" class="btn btn-dark px-5 py-2 me-4">承認</button>
+      <button id="request-btn" class="btn btn-dark px-5 py-2 me-4">修正</button>
     </div>
 </div>
 @endsection
@@ -77,14 +77,18 @@
 @section('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const requestBtn = document.getElementById('request-btn');
+      const requestBtn = document.getElementById('request-btn');
 
-        if (requestBtn) {
-            requestBtn.addEventListener('click', () => {
-                requestBtn.style.backgroundColor = '#696969'; // ✅ ボタンの色を変更
-                requestBtn.innerText = '承認済み'; // ✅ ボタンのテキストを変更
-            });
-        }
-    });
+      if (requestBtn) {
+        requestBtn.style.minWidth = requestBtn.offsetWidth + 'px'; // ✅ 初期幅を確保
+        requestBtn.style.display = "inline-block"; // ✅ 幅の固定化
+        requestBtn.style.whiteSpace = "nowrap"; // ✅ テキストの改行を防ぐ
+
+        requestBtn.addEventListener('click', () => {
+            requestBtn.style.backgroundColor = '#696969'; // ✅ 色変更
+            requestBtn.innerText = '修正済み'; // ✅ テキスト変更
+        });
+    }
+  });
 </script>
 @endsection

@@ -30,18 +30,42 @@
 
                   <tr style="height: 90px;">
                     <th style="padding-left: 50px; width: 30%; padding-top: 30px;">出勤・退勤</th>
-                    <td style="width: 40%; padding-top: 30px;">
-                      {{ \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') }} ～ 
-                      {{ \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') }}
+                    <td style="width: 40%; padding-top: 20px;">
+                      <div class="d-flex align-items-center gap-2">
+                        <input
+                          type="text"
+                          id="clock_in"
+                          class="form-control"
+                          value="{{ \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') }}"
+                          onchange="console.log('出勤時刻変更:', this.value)"
+                        >
+                        <span>～</span>
+                        <input
+                          type="text"
+                          id="clock_out"
+                          class="form-control"
+                          value="{{ \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') }}"
+                          onchange="console.log('退勤時刻変更:', this.value)"
+                        >
+                      </div>
                     </td>
                     <td></td>
                   </tr>
-
+                  
                   <tr style="height: 90px;">
                     <th style="padding-left: 50px; width: 30%; padding-top: 30px;">休憩</th>
                     <td style="width: 40%; padding-top: 30px;">
-                      {{ $attendance->break1_start ? \Carbon\Carbon::parse($attendance->break1_start)->format('H:i') : '―' }} ～ 
-                      {{ $attendance->break1_end ? \Carbon\Carbon::parse($attendance->break1_end)->format('H:i') : '―' }}
+                      @if ($attendance->breakTimes->isNotEmpty())
+                        @foreach ($attendance->breakTimes as $index => $break)
+                          {{ \Carbon\Carbon::parse($break->break_start)->format('H:i') }} ～
+                          {{ \Carbon\Carbon::parse($break->break_end)->format('H:i') }}
+                          @if (!$loop->last)
+                            <br>
+                          @endif
+                        @endforeach
+                      @else
+                        ―
+                      @endif
                     </td>
                     <td></td>
                   </tr>

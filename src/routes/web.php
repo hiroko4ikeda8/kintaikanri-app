@@ -56,12 +56,13 @@ Route::middleware(['web'])->group(function () {
 
 
 // 管理者用トップページ
-Route::get('/admin/attendance/list', [AttendanceController::class, 'index'])->name('admin.attendance.list');
-Route::get('/admin/attendance/{id}', [AttendanceController::class, 'show'])->name('admin.attendance.show');
-Route::get('/admin/staff/list', [StaffController::class, 'index'])->name('admin.staff.index');
-Route::get('/admin/attendance/staff/{id}', [StaffController::class, 'showAttendances'])->name('admin.staff.attendance.show');
-// 管理者側（一覧・承認）
-// Route::middleware(['auth', 'admin'])->group(function () {
-Route::get('/admin/stamp_correction_request/list', [StampCorrectionRequestController::class, 'index'])->name('admin.stamp_correction_request.list');
-Route::get('/admin/stamp_correction_request/approve/{id}', [StampCorrectionRequestController::class, 'approve']);
-// });
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/attendance/list', [AttendanceController::class, 'index'])->name('admin.attendance.list');
+    Route::get('/attendance/{id}', [AttendanceController::class, 'show'])->name('admin.attendance.show');
+    Route::get('/staff/list', [StaffController::class, 'index'])->name('admin.staff.index');
+    Route::get('/attendance/staff/{id}', [StaffController::class, 'showAttendances'])->name('admin.staff.attendance.show');
+    Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::class, 'index'])->name('admin.stamp_correction_request.list');
+    Route::get('/stamp_correction_request/approve/{id}', [StampCorrectionRequestController::class, 'approve'])->name('admin.stamp_correction_request.approve');
+});
+
+

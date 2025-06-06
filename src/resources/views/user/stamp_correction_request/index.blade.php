@@ -14,10 +14,10 @@
     <div class="container">
         <div class="row">
             <!-- 承認待ちテキスト -->
-            <div class="col-3 text-start fw-bold text-primary cursor-pointer" id="show-pending">承認待ち</div>
+            <div class="col-3 text-start cursor-pointer" id="show-pending">承認待ち</div>
 
             <!-- 承認済みテキスト -->
-            <div class="col-6 text-start fw-bold text-secondary cursor-pointer" id="show-approved">承認済み</div>
+            <div class="col-6 text-start cursor-pointer" id="show-approved">承認済み</div>
 
             <div class="col-3"></div>
         </div>
@@ -44,8 +44,8 @@
                 <tr>
                     <td>{{ $request->status_jp }}</td>
                     <td>{{ $request->user->name }}</td>
-                    <td>{{ $request->target_date }}</td>
-                    <td>{{ $request->reason }}</td>
+                    <td>{{ $request->attendance->attendance_date }}</td>
+                    <td>{{ $request->remarks }}</td>
                     <td>{{ $request->created_at->format('Y/m/d') }}</td>
                     <td><a href="{{ route('attendance.show', ['id' => $request->attendance_id]) }}" class="text-dark text-decoration-none">詳細</a></td>
                 </tr>
@@ -72,8 +72,8 @@
                 <tr>
                     <td>{{ $request->status_jp }}</td> <!-- ✅ 日本語表示に変更 -->
                     <td>{{ $request->user->name }}</td>
-                    <td>{{ $request->target_date }}</td>
-                    <td>{{ $request->reason }}</td>
+                    <td>{{ $request->attendance->attendance_date; }}</td>
+                    <td>{{ $request->remarks }}</td>
                     <td>{{ $request->created_at->format('Y/m/d') }}</td>
                     <td><a href="{{ route('attendance.show', ['id' => $request->attendance_id]) }}" class="text-dark text-decoration-none">詳細</a></td>
                 </tr>
@@ -112,6 +112,7 @@
 
         // 承認済みを表示
         showApprovedBtn.addEventListener("click", function () {
+
             approvedTable.style.display = "table"; // ✅ 表示
             pendingTable.style.display = "none"; // ✅ 非表示
 
