@@ -47,8 +47,9 @@
                     <td>{{ $request->attendance->attendance_date }}</td>
                     <td>{{ $request->remarks }}</td>
                     <td>{{ $request->created_at->format('Y/m/d') }}</td>
-                    <td><a href="{{ route('attendance.show', ['id' => $request->attendance_id]) }}" class="text-dark text-decoration-none">詳細</a></td>
-                </tr>
+                    <td>
+                        <a href="{{ route('user.attendance.show', ['id' => $request->attendance->id, 'from' => 'request']) }}" class="text-dark text-decoration-none">詳細</a>
+                    </td>
                 @endforeach
             </tbody>
         </table>
@@ -75,7 +76,9 @@
                     <td>{{ $request->attendance->attendance_date }}</td>
                     <td>{{ $request->remarks }}</td>
                     <td>{{ $request->created_at->format('Y/m/d') }}</td>
-                    <td><a href="{{ route('attendance.show', ['id' => $request->attendance_id]) }}" class="text-dark text-decoration-none">詳細</a></td>
+                    <td>
+                        <a href="{{ route('user.attendance.show', ['id' => $request->attendance->id, 'from' => 'request']) }}" class="text-dark text-decoration-none">詳細</a>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

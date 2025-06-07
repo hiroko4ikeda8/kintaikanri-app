@@ -33,10 +33,15 @@ Route::post('/login', [AuthController::class, 'userLogin'])->name('user.login');
 Route::middleware('auth')->group(function () {
     Route::get('/user/attendance', [UserAttendanceController::class, 'create'])->name('user.attendance.create');
     Route::get('/user/attendance/list', [UserAttendanceController::class, 'index'])->name('user.attendance.list');
-    Route::get('/user/attendance/{id}', [UserAttendanceController::class, 'show'])->name('attendance.show');
+    Route::get('/user/attendance/{id}', [UserAttendanceController::class, 'show'])->name('user.attendance.show');
 
-    Route::get('/user/stamp_correction_request/list', [UserStampCorrectionRequestController::class, 'index'])->name('user.stamp_correction_request.list');
-    Route::post('/user/stamp_correction_request/store', [UserStampCorrectionRequestController::class, 'store']);
+    // 勤怠申請一覧
+    Route::get('/user/stamp_correction_request/list', [UserAttendanceController::class, 'correctionRequestList'])
+        ->name('user.stamp_correction_request.list');
+
+    // 勤怠修正申請からの詳細表示（画面②）
+    Route::get('/user/stamp_correction_request/attendance/{id}', [UserAttendanceController::class, 'correctionRequestShow'])->name('attendance.show');
+    Route::post('/user/stamp_correction_request/store', [UserAttendanceController::class, 'store']);
 });
 
 // 開発用（後で本番時にはコメントアウトまたは削除）

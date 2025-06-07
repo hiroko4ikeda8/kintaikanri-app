@@ -10,6 +10,12 @@
 <div class="container mt-4 index-container">
     <h1 class="fw-bold">| 勤怠詳細</h1>
 
+    @if(request('from') === 'request')
+      <p>※これは修正申請からの詳細画面です</p>
+    @else
+      <p>通常の勤怠詳細表示です</p>
+    @endif
+
     <div class="row mt-4">
         <div class="col-md-12">
             <table class="table" style="border-radius: 10px; overflow: hidden;">

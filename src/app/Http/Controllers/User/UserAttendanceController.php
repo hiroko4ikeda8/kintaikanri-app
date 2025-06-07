@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Attendance;
+use App\Models\AttendanceCorrectRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -44,11 +45,17 @@ class UserAttendanceController extends Controller
         return view('user.attendance.list.index', compact('attendances', 'targetMonth', 'formattedMonth'));
     }
 
-
-    public function show($id)
+    public function show(Request $request)
     {
-        $attendance = Attendance::with('user')->findOrFail($id);
-        return view('user.attendance.show', compact('attendance'));
+        $attendance = Attendance::findOrFail($request->id); // URLの `id` を使って勤怠データを取得
+
+        if ($request->from === 'request') {
+            $message = '申請一覧画面から遷移しました。';
+        } else {
+            $message = '通常の勤怠詳細ページです。';
+        }
+
+        return view('user.attendance.show', compact('attendance', 'message'));
     }
 
     public function edit($attendanceId)
@@ -84,4 +91,23 @@ class UserAttendanceController extends Controller
 
         return redirect()->route('attendance.edit', $attendanceId)->with('success', '更新しました');
     }
+
+
+    // 勤怠修正申請一覧（元index）
+    public function correctionRequestList()
+    {
+        $pendingRequests = AttendanceCorrectRequest::where('user_id', Auth::id())
+            ->where('status', 'pending')
+            ->with(['user', 'attendance'])
+            ->get();
+
+        $approvedRequests = AttendanceCorrectRequest::where('user_id', Auth::id())
+            ->where('status', 'approved')
+            ->with(['user', 'attendance'])
+            ->get();
+
+        return view('user.stamp_correction_request.index', compact('pendingRequests', 'approvedRequests'));
+    }
+
+
 }
