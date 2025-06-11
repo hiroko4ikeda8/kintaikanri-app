@@ -17,8 +17,8 @@ class CreateAttendanceCorrectRequestsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('attendance_id')->constrained('attendances')->onDelete('cascade');
-            $table->time('correct_clock_in');
-            $table->time('correct_clock_out');
+            $table->time('correct_clock_in'); // 修正出勤
+            $table->time('correct_clock_out'); // 修正退勤
             $table->text('remarks')->nullable();
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamps();
