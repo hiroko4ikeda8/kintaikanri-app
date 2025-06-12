@@ -26,7 +26,7 @@
             <img src="{{ asset('images/arrow.png') }}" alt="翌月" style="width: 16px; height: 16px; margin-left: 4px;">
         </a>       
     </div>
-
+    
     <!-- 勤怠一覧テーブル -->
     <table class="table table-bordered text-center index-table">
         <thead class="bg-white index-header">
@@ -43,21 +43,28 @@
             @forelse ($attendances as $attendance)
                 <tr>
                     <td>{{ \Carbon\Carbon::parse($attendance->attendance_date)->translatedFormat('m/d(D)') }}</td>
-                    <td>{{ $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '-' }}</td>
-                    <td>{{ $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '-' }}</td>
+                    <td>{{ $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '' }}</td>
+                    <td>{{ $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '' }}</td>
                     <td>
                         @php
-                            $totalBreak = $attendance->breakTimes->sum(function($break) {
-                                return \Carbon\Carbon::parse($break->break_end)->diffInMinutes(\Carbon\Carbon::parse($break->break_start));
-                            });
+                            $isAbsent = is_null($attendance->clock_in) && is_null($attendance->clock_out);
+                    
+                            if ($isAbsent) {
+                                $totalBreak = null;
+                            } else {
+                                $totalBreak = $attendance->breakTimes->sum(function($break) {
+                                    return \Carbon\Carbon::parse($break->break_end)->diffInMinutes(\Carbon\Carbon::parse($break->break_start));
+                                });
+                            }
                         @endphp
-                        {{ floor($totalBreak / 60) . ':' . str_pad($totalBreak % 60, 2, '0', STR_PAD_LEFT) }}
+                    
+                        {{ !is_null($totalBreak) ? floor($totalBreak / 60) . ':' . str_pad($totalBreak % 60, 2, '0', STR_PAD_LEFT) : '' }}
                     </td>
                     <td>
                         @if ($attendance->total_work_time)
                             {{ floor($attendance->total_work_time / 60) . ':' . str_pad($attendance->total_work_time % 60, 2, '0', STR_PAD_LEFT) }}
                         @else
-                            -
+                            
                         @endif
                     </td>
                     <td><a href="{{ route('user.attendance.show', ['id' => $attendance->id]) }}" class="text-dark text-decoration-none">詳細</a></td>

@@ -10,6 +10,15 @@ class Attendance extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'attendance_date',
+        'clock_in',
+        'clock_out',
+        'status',
+        'total_work_time',
+    ];
+
     // Attendance.php
     public function user()
     {
@@ -43,7 +52,7 @@ class Attendance extends Model
         return $this->hasMany(BreakTime::class);
     }
 
-    public function attendanceCorrectRequests()
+    public function attendanceCorrectRequest()
     {
         return $this->hasOne(AttendanceCorrectRequest::class);
     }

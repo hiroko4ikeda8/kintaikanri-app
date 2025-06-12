@@ -31,7 +31,13 @@ class AttendancesTableSeeder extends Seeder
             $date = $startDate->copy();
 
             while ($date->lte($endDate)) {
-                if ($date->isWeekday()) {
+                // 祝日かどうかの判定は不要、全日対象にする
+                // 20%の確率で欠勤(レコードを作らない)
+                if (rand(1, 100) <= 20) {
+                    $date->addDay();
+                    continue;
+                }
+                    
                     DB::table('attendances')->insert([
                         'user_id' => $user->id,
                         'attendance_date' => $date->toDateString(),
@@ -42,7 +48,6 @@ class AttendancesTableSeeder extends Seeder
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]);
-                }
                 $date->addDay();
             }
         }

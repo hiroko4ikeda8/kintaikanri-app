@@ -33,7 +33,9 @@ Route::post('/login', [AuthController::class, 'userLogin'])->name('user.login');
 Route::middleware('auth')->group(function () {
     Route::get('/user/attendance', [UserAttendanceController::class, 'create'])->name('user.attendance.create');
     Route::get('/user/attendance/list', [UserAttendanceController::class, 'index'])->name('user.attendance.list');
-    Route::get('/user/attendance/{id}', [UserAttendanceController::class, 'show'])->name('user.attendance.show');
+    Route::get('/user/attendance/{id}', [UserAttendanceController::class, 'show'])
+        ->where('id', '.*') // ← 任意の文字列を許容
+        ->name('user.attendance.show');
 
     // 勤怠申請一覧
     Route::get('/user/stamp_correction_request/list', [UserAttendanceController::class, 'correctionRequestList'])

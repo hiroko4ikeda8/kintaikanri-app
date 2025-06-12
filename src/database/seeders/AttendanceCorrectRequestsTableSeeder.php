@@ -25,6 +25,7 @@ class AttendanceCorrectRequestsTableSeeder extends Seeder
             for ($month = 1; $month <= 5; $month++) {
                 foreach ($days as $day) {
                     $date = Carbon::create(2025, $month, $day);
+                    echo "Checking user {$user->id}, target date: {$date->toDateString()}\n";
                     $attendance = Attendance::where('user_id', $user->id)
                         ->whereDate('attendance_date', $date->toDateString())
                         ->first();

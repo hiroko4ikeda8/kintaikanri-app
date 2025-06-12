@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use Illuminate\Database\Eloquent\Collection;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Attendance;
@@ -23,17 +24,46 @@ class UserAttendanceController extends Controller
     public function index(Request $request)
     {
         $userId = Auth::id();
-
-        // ▼ 初期値を「2025-05」に変更
         $targetMonth = $request->query('month', '2025-05');
-
         $formattedMonth = Carbon::parse($targetMonth . '-01')->format('Y/m');
 
+        $startOfMonth = Carbon::parse($targetMonth . '-01');
+        $endOfMonth = $startOfMonth->copy()->endOfMonth();
+
+        // 対象月のすべての日をコレクション化
+        $allDates = collect();
+        $date = $startOfMonth->copy();
+        while ($date->lte($endOfMonth)) {
+            $allDates->push($date->copy());
+            $date->addDay();
+        }
+
+        // 既存の勤怠データを取得（with付き）
         $attendances = Attendance::where('user_id', $userId)
-            ->where('attendance_date', 'like', $targetMonth . '%')
+            ->whereBetween('attendance_date', [$startOfMonth->toDateString(), $endOfMonth->toDateString()])
             ->orderBy('attendance_date')
-            ->with('breakTimes')
-            ->get();
+            ->with(['breakTimes', 'attendanceCorrectRequest']) // ← ここを追加
+            ->get()
+            ->keyBy('attendance_date'); // 日付をキーに
+
+        $attendanceList = $allDates->map(function ($date, $index) use ($attendances, $userId) {
+            $dateStr = $date->toDateString();
+            if ($attendances->has($dateStr)) {
+                return $attendances->get($dateStr); // 実データ
+            }
+
+            // 欠勤：仮のIDを付与（例えば "absent_2025-05-01" など）
+            $fake = new Attendance([
+                'user_id' => $userId,
+                'attendance_date' => $dateStr,
+                'status' => '欠勤',
+                'clock_in' => null,
+                'clock_out' => null,
+                'total_work_time' => 0,
+            ]);
+            $fake->id = 'absent_' . $dateStr; // ← 仮のID文字列
+            return $fake;
+        });
 
         if ($request->ajax()) {
             return response()->json([
@@ -42,12 +72,37 @@ class UserAttendanceController extends Controller
             ]);
         }
 
-        return view('user.attendance.list.index', compact('attendances', 'targetMonth', 'formattedMonth'));
+        return view('user.attendance.list.index', [
+            'attendances' => $attendanceList, // ← こちらに変更
+            'targetMonth' => $targetMonth,
+            'formattedMonth' => $formattedMonth,
+        ]);
     }
 
-    public function show(Request $request)
+    public function show(Request $request, $id)
     {
-        $attendance = Attendance::findOrFail($request->id); // URLの `id` を使って勤怠データを取得
+        // $idが 'absent_' で始まる場合は欠勤仮オブジェクトを作成して返す
+        if (str_starts_with($id, 'absent_')) {
+            $dateStr = str_replace('absent_', '', $id);
+
+            $attendance = new Attendance([
+                'user_id' => Auth::id(),
+                'attendance_date' => $dateStr,
+                'status' => '欠勤',
+                'clock_in' => null,
+                'clock_out' => null,
+                'total_work_time' => 0,
+            ]);
+
+            // 空の休憩コレクションをセット
+            $attendance->setRelation('breakTimes', new Collection());
+
+            $message = 'この日は出勤記録がなく、欠勤とみなされます。';
+            return view('user.attendance.show', compact('attendance', 'message'));
+        }
+
+        // それ以外は通常の勤怠詳細表示
+        $attendance = Attendance::with('breakTimes')->findOrFail($id);
 
         if ($request->from === 'request') {
             $message = '申請一覧画面から遷移しました。';
