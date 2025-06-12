@@ -40,7 +40,7 @@ class AttendanceCorrectRequest extends Model
         return $this->belongsTo(Attendance::class);
     }
 
-    public function correctBreaks()
+    public function attendanceCorrectBreaks()
     {
         return $this->hasMany(AttendanceCorrectBreak::class);
     }

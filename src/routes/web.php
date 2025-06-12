@@ -37,6 +37,9 @@ Route::middleware('auth')->group(function () {
         ->where('id', '.*') // ← 任意の文字列を許容
         ->name('user.attendance.show');
 
+    Route::get('/user/attendances/ajax', [UserAttendanceController::class, 'ajaxFetchAttendances'])
+        ->name('user.attendance.ajax');
+
     // 勤怠申請一覧
     Route::get('/user/stamp_correction_request/list', [UserAttendanceController::class, 'correctionRequestList'])
         ->name('user.stamp_correction_request.list');

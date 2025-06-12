@@ -79,6 +79,44 @@ class UserAttendanceController extends Controller
         ]);
     }
 
+    public function ajaxFetchAttendances(Request $request)
+    {
+        $userId = Auth::id();
+        $targetMonth = $request->query('month', date('Y-m')); // デフォルトは今月
+
+        $startOfMonth = Carbon::parse($targetMonth . '-01');
+        $endOfMonth = $startOfMonth->copy()->endOfMonth();
+
+        $attendances = Attendance::where('user_id', $userId)
+            ->whereBetween('attendance_date', [$startOfMonth->toDateString(), $endOfMonth->toDateString()])
+            ->orderBy('attendance_date')
+            ->with(['breakTimes', 'attendanceCorrectRequest'])
+            ->get();
+
+        // JSON返却用に整形（必要に応じて）
+        $data = $attendances->map(function ($attendance) {
+            return [
+                'id' => $attendance->id,
+                'attendance_date' => $attendance->attendance_date,
+                'clock_in' => $attendance->clock_in,
+                'clock_out' => $attendance->clock_out,
+                'break_times' => $attendance->breakTimes->map(function ($break) {
+                    return [
+                        'break_start' => $break->break_start,
+                        'break_end' => $break->break_end,
+                    ];
+                }),
+                'total_work_time' => $attendance->total_work_time,
+                'status' => $attendance->status,
+            ];
+        });
+
+        return response()->json([
+            'attendances' => $data,
+            'month' => $targetMonth,
+        ]);
+    }
+
     public function show(Request $request, $id)
     {
         // $idが 'absent_' で始まる場合は欠勤仮オブジェクトを作成して返す
