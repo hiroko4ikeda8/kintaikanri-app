@@ -82,9 +82,15 @@ class UserAttendanceController extends Controller
     public function ajaxFetchAttendances(Request $request)
     {
         $userId = Auth::id();
-        $targetMonth = $request->query('month', date('Y-m')); // デフォルトは今月
+        $rawMonth = $request->query('month', date('Y-m'));
 
-        $startOfMonth = Carbon::parse($targetMonth . '-01');
+        // ✅ 正しく `YYYY/MM` の形式になっているか確認
+        if (!preg_match('/^\d{4}\/\d{2}$/', $rawMonth)) {
+            $rawMonth = date('Y/m'); // フォーマットが異常なら現在の年月を適用
+        }
+
+        $targetMonth = str_replace('/', '-', $rawMonth); // `/` → `-` に変換
+        $startOfMonth = Carbon::createFromFormat('Y-m-d', "{$targetMonth}-01"); // ✅ Carbonが適切に解析
         $endOfMonth = $startOfMonth->copy()->endOfMonth();
 
         $attendances = Attendance::where('user_id', $userId)
@@ -100,7 +106,7 @@ class UserAttendanceController extends Controller
                 'attendance_date' => $attendance->attendance_date,
                 'clock_in' => $attendance->clock_in,
                 'clock_out' => $attendance->clock_out,
-                'break_times' => $attendance->breakTimes->map(function ($break) {
+                'breaktimes' => $attendance->breakTimes->map(function ($break) {
                     return [
                         'break_start' => $break->break_start,
                         'break_end' => $break->break_end,
