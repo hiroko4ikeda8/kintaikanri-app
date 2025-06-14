@@ -23,7 +23,7 @@
         <a href="#" id="next-day" class="date-switch-link text-dark">
             翌日
             <img src="{{ asset('images/arrow.png') }}" alt="翌日" style="width: 16px; height: 16px; margin-left: 4px;">
-        </a>       
+        </a>
     </div>
 
     <!-- 勤怠一覧テーブル -->
@@ -69,44 +69,4 @@
         </tbody>
     </table>
 </div>
-@endsection
-
-@section('scripts')
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let displayedDateElement = document.getElementById("displayed-date");
-        let prevDayButton = document.getElementById("prev-day");
-        let nextDayButton = document.getElementById("next-day");
-
-        // 現在表示されている日付を取得（Bladeから取得）
-        let currentDate = new Date("{{ $formattedDate }}");
-
-        // 日付を更新する関数
-        function updateDate(days) {
-            currentDate.setDate(currentDate.getDate() + days);
-            // ✅ 日付を "YYYY/MM/DD" にフォーマット
-            let year = currentDate.getFullYear();
-            let month = String(currentDate.getMonth() + 1).padStart(2, '0');
-            let day = String(currentDate.getDate()).padStart(2, '0');
-            let newFormattedDate = `${year}/${month}/${day}`; // 🔥 Laravelと同じフォーマットに変更
-
-            displayedDateElement.innerHTML = `
-                <img src="{{ asset('images/calendar_icon.png') }}" alt="カレンダーアイコン" style="width: 24px; height: 24px; margin-right: 6px;">
-                <i class="bi bi-calendar"></i> ${newFormattedDate}
-            `;
-        }
-
-        // 前日をクリック
-        prevDayButton.addEventListener("click", function(event) {
-            event.preventDefault(); // リンクのデフォルト動作を防ぐ
-            updateDate(-1);
-        });
-
-        // 翌日をクリック
-        nextDayButton.addEventListener("click", function(event) {
-            event.preventDefault();
-            updateDate(1);
-        });
-    });
-</script>
 @endsection

@@ -65,12 +65,6 @@ class UserAttendanceController extends Controller
             return $fake;
         });
 
-        if ($request->ajax()) {
-            return response()->json([
-                'month' => $formattedMonth,
-                'attendances' => $attendances,
-            ]);
-        }
 
         return view('user.attendance.list.index', [
             'attendances' => $attendanceList, // ← こちらに変更
@@ -79,49 +73,7 @@ class UserAttendanceController extends Controller
         ]);
     }
 
-    public function ajaxFetchAttendances(Request $request)
-    {
-        $userId = Auth::id();
-        $rawMonth = $request->query('month', date('Y-m'));
 
-        // ✅ 正しく `YYYY/MM` の形式になっているか確認
-        if (!preg_match('/^\d{4}\/\d{2}$/', $rawMonth)) {
-            $rawMonth = date('Y/m'); // フォーマットが異常なら現在の年月を適用
-        }
-
-        $targetMonth = str_replace('/', '-', $rawMonth); // `/` → `-` に変換
-        $startOfMonth = Carbon::createFromFormat('Y-m-d', "{$targetMonth}-01"); // ✅ Carbonが適切に解析
-        $endOfMonth = $startOfMonth->copy()->endOfMonth();
-
-        $attendances = Attendance::where('user_id', $userId)
-            ->whereBetween('attendance_date', [$startOfMonth->toDateString(), $endOfMonth->toDateString()])
-            ->orderBy('attendance_date')
-            ->with(['breakTimes', 'attendanceCorrectRequest'])
-            ->get();
-
-        // JSON返却用に整形（必要に応じて）
-        $data = $attendances->map(function ($attendance) {
-            return [
-                'id' => $attendance->id,
-                'attendance_date' => $attendance->attendance_date,
-                'clock_in' => $attendance->clock_in,
-                'clock_out' => $attendance->clock_out,
-                'breaktimes' => $attendance->breakTimes->map(function ($break) {
-                    return [
-                        'break_start' => $break->break_start,
-                        'break_end' => $break->break_end,
-                    ];
-                }),
-                'total_work_time' => $attendance->total_work_time,
-                'status' => $attendance->status,
-            ];
-        });
-
-        return response()->json([
-            'attendances' => $data,
-            'month' => $targetMonth,
-        ]);
-    }
 
     public function show(Request $request, $id)
     {
@@ -171,7 +123,7 @@ class UserAttendanceController extends Controller
         $breakStarts = $request->input('break_start', []);
         $breakEnds = $request->input('break_end', []);
 
-        // 既存のbreakTimesを削除して更新する例（処理は要検討）
+        // 休憩時間を更新
         $attendance->breakTimes()->delete();
 
         foreach ($breakStarts as $index => $start) {
@@ -184,8 +136,8 @@ class UserAttendanceController extends Controller
             }
         }
 
-        // 他の勤怠データ更新処理もここに書く
-
+        // breakTimes をリロードしてから保存
+        $attendance->load('breakTimes');
         $attendance->save();
 
         return redirect()->route('attendance.edit', $attendanceId)->with('success', '更新しました');
