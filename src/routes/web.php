@@ -60,8 +60,6 @@ Route::middleware(['web'])->group(function () {
 // 本番用：POSTメソッドでログアウト
 // Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-
-
 // 管理者用トップページ
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/attendance/list', [AttendanceController::class, 'index'])->name('admin.attendance.list');
