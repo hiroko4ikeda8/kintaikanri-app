@@ -1,4 +1,4 @@
-# FM-APP
+# kintaikanri-app
 
 # 開発環境セットアップ手順
 
@@ -115,7 +115,7 @@ npm install
 npm run dev
 ```
 
-**※** 
+**※**
 npm run dev を実行しないと、CSSやJSが反映されない！
 本番環境なら npm run prod で圧縮したファイルを作成
 
@@ -149,5 +149,7 @@ php artisan storage:link
 
 
 これで開発環境のセットアップは完了です。
+
+kintaikari-app ER図
 
 ![ER Diagram](kintaikanri-app01.png)
