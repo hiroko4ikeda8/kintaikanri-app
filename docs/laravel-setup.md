@@ -24,7 +24,7 @@ laravelディレクトリ以下に、FM-APPを作成
 ディレクトリ構成
 
 ```
-FM-APP
+kintaikanri-app
 ├── docker
 │   ├── mysql
 │   │   ├── data　（空にしておく）
@@ -121,7 +121,7 @@ lsコマンドでディレクトリ内を確認すると、ディレクトリや
 
 http://localhost/
 
-**※** アクセスした際に、Permission deniedというエラーが発生した場合は、~/coachtech/laravel/FM-APPディレクトリで以下のコマンドを実行してください。
+**※** アクセスした際に、Permission deniedというエラーが発生した場合は、~/coachtech/laravel/kintaikanri-appディレクトリで以下のコマンドを実行してください。
 
 ```
 $ sudo chmod -R 777 src/*

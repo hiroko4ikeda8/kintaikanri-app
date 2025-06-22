@@ -1,5 +1,5 @@
 
-### **GitHub用の `.gitignore` 作成手順（FM-APP）**  
+### **GitHub用の `.gitignore` 作成手順（kintaikanri-app）**  
 
 `.gitignore` は、Gitで管理しないファイルやフォルダを指定するための設定ファイルです。Laravelプロジェクトでは、環境変数ファイルやデータベースのデータなどをGitに含めないように設定します。
 
@@ -7,10 +7,10 @@
 
 ## **1. `.gitignore` ファイルの作成**
 ### **① 既存の `.gitignore` があるか確認**
-ターミナルで `FM-APP` のプロジェクトディレクトリに移動し、`.gitignore` があるか確認します。
+ターミナルで `kintaikanri-app` のプロジェクトディレクトリに移動し、`.gitignore` があるか確認します。
 
 ```bash
-cd ~/coachtech/模擬案件－予備/laravel/FM-APP
+cd ~/coachtech/模擬案件－予備/laravel/kintaikanri-app
 ls -a
 ```
 

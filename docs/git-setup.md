@@ -20,7 +20,7 @@ GitHubのウェブサイトでリポジトリを作成する手順を説明し�
 ## **3. リポジトリ情報の入力**
 新しいリポジトリの情報を入力します。
 
-- **Repository name（リポジトリ名）** → `FM-APP`  
+- **Repository name（リポジトリ名）** → `kintaikanri-app`  
 - **Description（説明）** → 任意（例: "Laravelプロジェクトの開発用リポジトリ"）  
 - **Public / Private**（公開 or 非公開） →publicで作成します   
   - `Public`: 誰でも閲覧可能  
@@ -39,12 +39,12 @@ GitHubのウェブサイトでリポジトリを作成する手順を説明し�
 ---
 
 ## **5. ローカルのプロジェクトとGitHubリポジトリを接続**
-次に、ローカルの `FM-APP` プロジェクトと GitHub のリポジトリを連携します。
+次に、ローカルの `kintaikanri-app` プロジェクトと GitHub のリポジトリを連携します。
 
 1. ターミナルを開く  
 2. プロジェクトのディレクトリに移動
    ```bash
-   cd ~/coachtech/laravel/FM-APP
+   cd ~/coachtech/laravel/kintaikanri-app
    ```
 3. Gitを初期化
    ```bash
@@ -52,7 +52,7 @@ GitHubのウェブサイトでリポジトリを作成する手順を説明し�
    ```
 4. GitHubリポジトリをリモートに追加
    ```bash
-   git remote add origin https://github.com/あなたのGitHubユーザー名/FM-APP.git
+   git remote add origin https://github.com/あなたのGitHubユーザー名/kintaikanri-app.git
    ```
 5. 最初のコミットとプッシュ
    ```bash

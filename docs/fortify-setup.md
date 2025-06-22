@@ -5,7 +5,7 @@
 
 ## 前提条件
 
-- **Laravel 8.83.29**
+- **Laravel 8.83.8**
 - **Laravel Fortify 1.x（PHP 7.4 との互換性に注意）**
 - **PHP 7.4.9**
 - **MySQL（MariaDB 10.3.39）**
