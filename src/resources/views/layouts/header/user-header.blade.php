@@ -1,6 +1,6 @@
 <header class="py-3 mb-4 border-bottom bg-dark">
     <div class="container d-flex align-items-center justify-content-between">
-        <a href="{{ url('/') }}">
+        <a href="{{ url('/user/attendance') }}">
             <img src="{{ asset('images/logo.png') }}" alt="勤怠管理アプリ ロゴ" style="height: 50px;">
         </a>
         <nav class="nav">

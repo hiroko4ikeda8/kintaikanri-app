@@ -29,7 +29,6 @@ Route::get('/login', [AuthController::class, 'showUserLoginForm'])->name('login'
 // POST /login に対応
 Route::post('/login', [AuthController::class, 'userLogin'])->name('user.login');
 
-
 Route::middleware('auth')->group(function () {
     Route::get('/user/attendance', [UserAttendanceController::class, 'create'])->name('user.attendance.create');
     Route::get('/user/attendance/list', [UserAttendanceController::class, 'index'])->name('user.attendance.list');
@@ -49,8 +48,6 @@ Route::middleware('auth')->group(function () {
 // 開発用（後で本番時にはコメントアウトまたは削除）
 Route::get('/logout', [AuthController::class, 'logout']); // 開発中のみ使用
 // ↑ 開発中はGETでログアウトしていたが、本番環境では使用しないこと！
-
-
 
 Route::middleware(['web'])->group(function () {
     Route::get('/admin/login', [AuthController::class, 'showAdminLoginForm'])->name('admin.login.form');
